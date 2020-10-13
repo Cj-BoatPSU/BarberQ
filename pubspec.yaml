@@ -41,6 +41,18 @@ flutter:
   assets:
     - images/calendar.png
     - images/add-bookmark.png
+    - images/Icon1.png
+    - images/Icon2.png
+    - images/Icon3.png
+    - images/barber-chair.png
+    - images/barber-scissors.png
+    - images/bookmark.png
+    - images/Cutservice.png
+    - images/hair-washing-sink.png
+    - images/Shaving.png
+    - images/barber-clippers.png
+    - images/barber-scissors.png
+    - images/time.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -53,6 +65,16 @@ flutter:
      - family: Chewy
        fonts:
          - asset: fonts/Chewy-Regular.ttf
+     - family: CinzelDecorative-Bold
+       fonts:
+         - asset: fonts/CinzelDecorative-Bold.ttf
+     - family: C_BOX_D
+       fonts: 
+         - asset: fonts/C_BOX_D.TTF
+     - family: C_BOX
+       fonts: 
+         - asset: fonts/C_BOX.TTF
+    
 
   # To add assets to your application, add an assets section, like this:
   # assets:
