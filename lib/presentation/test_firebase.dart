@@ -9,14 +9,14 @@ import 'package:firebase_database/ui/firebase_animated_list.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final FirebaseApp app = await Firebase.initializeApp(
-    name: 'db2',
-    options: FirebaseOptions(
-            appId: '1:411996370978:android:512a1b2ab563064eb3f27b',
-            apiKey: 'AIzaSyB5ax9sj1YnSqfof5z08hQ4iyxqnVvqXfk' ,
-            messagingSenderId: '411996370978',
-            projectId: '411996370978',
-            databaseURL: 'https://barberq-e783d.appspot.com/',
-          ),
+    // name: 'db2',
+    // options: FirebaseOptions(
+    //         appId: '1:411996370978:android:512a1b2ab563064eb3f27b',
+    //         apiKey: 'AIzaSyB5ax9sj1YnSqfof5z08hQ4iyxqnVvqXfk' ,
+    //         messagingSenderId: '411996370978',
+    //         projectId: '411996370978',
+    //         databaseURL: 'https://barberq-e783d.appspot.com/',
+    //       ),
   );
   runApp(MaterialApp(
     title: 'Flutter Database Example',
