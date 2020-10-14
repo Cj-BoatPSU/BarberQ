@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "411996370978",
+    "firebase_url": "https://barberq-e783d.firebaseio.com",
+    "project_id": "barberq-e783d",
+    "storage_bucket": "barberq-e783d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411996370978:android:512a1b2ab563064eb3f27b",
+        "android_client_info": {
+          "package_name": "com.example.barberq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "411996370978-31llp29u8972ooerkqukmll7eucn71pd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5ax9sj1YnSqfof5z08hQ4iyxqnVvqXfk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "411996370978-31llp29u8972ooerkqukmll7eucn71pd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

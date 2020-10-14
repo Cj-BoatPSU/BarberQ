@@ -1,22 +1,23 @@
 import 'package:barberq/presentation/history_page.dart';
 import 'package:flutter/material.dart';
 import 'package:barberq/reserveInfo.dart';
-import 'package:barberq/presentation/reservation_page.dart';
+import 'package:barberq/presentation/reservation2_page.dart';
+import 'package:barberq/presentation/anotherDay_page.dart';
 
-class AnotherDayScreen extends StatefulWidget {
-  final DateTime _dateTime;
-  AnotherDayScreen(this._dateTime);
+class Home2PageScreen extends StatefulWidget {
+  Home2PageScreen();
 
   @override
-  _AnotherDayScreenState createState() => _AnotherDayScreenState();
+  _Home2PageScreenState createState() => _Home2PageScreenState();
 }
 
-class _AnotherDayScreenState extends State<AnotherDayScreen> {
+class _Home2PageScreenState extends State<Home2PageScreen> {
   DateTime _dateTime;
+  bool todayClicked;
+  bool tomorrowClicked;
   List<ReserveInfo> listtimes = [];
   @override
   void initState() {
-   _dateTime = widget._dateTime;
     listtimes = [
       ReserveInfo(TimeOfDay(hour: 9, minute: 0), "Boat", "0986706456", true, true, true, true),
       ReserveInfo(TimeOfDay(hour: 10, minute: 0), "", "", false, false, false, false),
@@ -28,50 +29,189 @@ class _AnotherDayScreenState extends State<AnotherDayScreen> {
       ReserveInfo(TimeOfDay(hour: 16, minute: 0), "", "", false, false, false, false),
       ReserveInfo(TimeOfDay(hour: 17, minute: 0), "", "", false, false, false, false),
       ReserveInfo(TimeOfDay(hour: 18, minute: 0), "", "", false, false, false, false),
-      ReserveInfo(TimeOfDay(hour: 19, minute: 0), "", "", false, false, false, false)
-      ];
+      ReserveInfo(TimeOfDay(hour: 19, minute: 0), "", "", false, false, false, false),
+    ];
+    todayClicked = false;
+    tomorrowClicked = true;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
+    var now = DateTime.now();
     return Scaffold(
-      backgroundColor: Color(0xff151e3d),
-      resizeToAvoidBottomPadding: false,
-      appBar: AppBar(
-       title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text("BarberQ", style: TextStyle(fontFamily: 'C_BOX', fontSize: 35),),
-              Padding(padding: EdgeInsets.only(left:10)),
-              Image.asset("images/Icon2.png", height: 50,width: 50,),
+        backgroundColor: Color(0xff151e3d),
+        resizeToAvoidBottomPadding: false,
+        appBar: AppBar(
+          title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  "BarberQ",
+                  style: TextStyle(fontFamily: 'C_BOX', fontSize: 35),
+                ),
+                Padding(padding: EdgeInsets.only(left: 10)),
+                Image.asset(
+                  "images/Icon2.png",
+                  height: 50,
+                  width: 50,
+                ),
               ]),
-          backgroundColor: Color(0xff2b3252),//navy0xff2b3252
-      ),
-      body: Column(children: <Widget>[
-        Container(
-          margin: EdgeInsets.all(10),
-          child: Text(
-            "${_dateTime.day}/ ${_dateTime.month}/ ${_dateTime.year}",
-             style: TextStyle(fontSize: 25, color: Color(0xffdcd4c0), 
-             fontFamily: 'CinzelDecorative-Bold'),
-          ),
+          backgroundColor: Color(0xff2b3252), //navy0xff2b3252
         ),
-        Expanded(
-          child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: 11,
-              itemBuilder: (BuildContext context, int index) {
-                return buildlisttime(context, index);
-              }),
-        ),
-      ]),
-    );
+        body: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(top: 20),
+                child: Text(
+                  "Choose a day for reservations",
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Color(0xffdcd4c0),
+                      fontFamily: 'CinzelDecorative-Bold'),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.all(10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    if (todayClicked)
+                      Text(
+                        "${now.day}/ ${now.month}/ ${now.year}",
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xffdcd4c0),
+                            fontFamily: 'CinzelDecorative-Bold'),
+                      ),
+                    if (tomorrowClicked)
+                      Text(
+                        "${now.day + 1}/ ${now.month}/ ${now.year}",
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xffdcd4c0),
+                            fontFamily: 'CinzelDecorative-Bold'),
+                      ),
+                  ],
+                ),
+              ),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 10),
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: todayClicked
+                            ? Colors.green[300]
+                            : Color(0xffdcd4c0), //Color(0xffdcd4c0)
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 3,
+                        ),
+                      ),
+                      child: RawMaterialButton(
+                        onPressed: () {
+                          setState(() {
+                            todayClicked = true;
+                            tomorrowClicked = false;
+                          });
+                        },
+                        elevation: 2.0,
+                        child: Text(
+                          "Today",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        // shape: CircleBorder(),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 10),
+                      alignment: Alignment.center,
+                      height: 50,
+                      width: 150,
+                      decoration: BoxDecoration(
+                        color: tomorrowClicked
+                            ? Colors.green[300]
+                            : Color(0xffdcd4c0),
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(
+                          color: Colors.black,
+                          width: 3,
+                        ),
+                      ),
+                      child: RawMaterialButton(
+                        onPressed: () {
+                          setState(() {
+                            todayClicked = false;
+                            tomorrowClicked = true;
+                          });
+                        },
+                        elevation: 15.0,
+                        child: Text(
+                          "Tomorrow",
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        // shape: CircleBorder(),
+                      ),
+                    ),
+                  ]),
+              Expanded(
+                child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    itemCount: listtimes.length,
+                    //padding: EdgeInsets.symmetric( horizontal: 10 , vertical: 10 ),
+                    itemBuilder: (BuildContext context, int index) {
+                      return buildlisttime(context, index);
+                    }),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 10),
+                child: FloatingActionButton(
+                  heroTag: Text("hero1"),
+                  onPressed: () => {
+                    showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2018),
+                      lastDate: DateTime(2022),
+                    ).then((date) => {
+                          setState(() {
+                            _dateTime = date;
+                          }),
+                          if (_dateTime != null)
+                            {navigatorToAnotherDay(context, _dateTime)}
+                        }),
+                  },
+                  child: Image.asset(
+                    "images/calendar.png",
+                    width: 40,
+                    height: 40,
+                  ),
+                  backgroundColor: Color(0xffdcd4c0),
+                ),
+              )
+            ]));
   }
 
- void navigatorToReservation(BuildContext context, ReserveInfo _thisReserveInfo, int index) async {
+  void navigatorToReservation(BuildContext context, ReserveInfo _thisReserveInfo, int index) async {
     final ReserveInfo newreservation = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ReservationScreen(_thisReserveInfo)));
+        context, MaterialPageRoute(builder: (context) => Reservation2Screen(_thisReserveInfo)));
     if (newreservation != null) {
       setState(() {
         listtimes[index] = newreservation;
@@ -134,7 +274,8 @@ class _AnotherDayScreenState extends State<AnotherDayScreen> {
                 );
               });
   }
-Widget buildlisttime(BuildContext context, int index) {
+
+  Widget buildlisttime(BuildContext context, int index) {
     return Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
