@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:barberq/listTme.dart';
-import 'package:barberq/presentation/reservation_page.dart';
+//import 'package:barberq/presentation/reservation_page.dart';
 
 class AnotherDayScreen extends StatefulWidget {
   final DateTime _dateTime;
@@ -55,18 +54,18 @@ class _AnotherDayScreenState extends State<AnotherDayScreen> {
   }
 
 
-void navigatorToReservation(BuildContext context) async {
-    final ReserveInfo resultreservation = await Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ReservationScreen()));
-    if (resultreservation != null) {
-      setState(() {
+// void navigatorToReservation(BuildContext context) async {
+//     final ReserveInfo resultreservation = await Navigator.push(
+//         context,
+//         MaterialPageRoute(
+//             builder: (context) => ReservationScreen()));
+//     if (resultreservation != null) {
+//       setState(() {
        
-      });
-      print("Success navigator to reservation page");
-    }
-  }
+//       });
+//       print("Success navigator to reservation page");
+//     }
+//   }
 
   Widget buildlisttime(BuildContext context, int index) {
     return Column(
@@ -115,7 +114,7 @@ void navigatorToReservation(BuildContext context) async {
                       heroTag: Text("hero2"),
                       backgroundColor: Color(0xffdcd4c0),
                       onPressed: (){
-                          navigatorToReservation(context);
+                         // navigatorToReservation(context);
                     }, 
                     child: 
                     Image.asset("images/add-bookmark.png")

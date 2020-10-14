@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:barberq/reserveInfo.dart';
+
 
 class HistoryScreen extends StatefulWidget {
   final DateTime _dateTime;
-  HistoryScreen(this._dateTime);
+  final ReserveInfo _reserveInfo;
+  HistoryScreen(this._dateTime, this._reserveInfo);
 
   @override
   _HistoryScreenState createState() => _HistoryScreenState();
@@ -10,15 +13,17 @@ class HistoryScreen extends StatefulWidget {
 
 class _HistoryScreenState extends State<HistoryScreen> {
   DateTime _datetime;
+  ReserveInfo _reserveinfo;
   @override
   void initState() {
     _datetime = widget._dateTime;
+    _reserveinfo = widget._reserveInfo;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    var now = DateTime.now();
+    //var now = DateTime.now();
     return Scaffold(
       backgroundColor: Color(0xff151e3d),
       resizeToAvoidBottomPadding: false,
@@ -91,7 +96,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           ),
                           child: Row(
                             children: [
-                              Text("${now.hour}.00 - ${now.hour+1}.00 ",
+                              Text("${_reserveinfo.time.hour}.00 - ${_reserveinfo.time.hour+1}.00 ",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 35,
@@ -124,6 +129,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
+                    if(_reserveinfo.cutService)
                     Column(
                       children: <Widget>[
                         Container(
@@ -153,6 +159,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                         ),
                       ],
                     ),
+                    if(_reserveinfo.washService)
                     Column(children: <Widget>[
                       Container(
                         child: Container(
@@ -180,6 +187,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             fontFamily: 'Merienda'),
                       ),
                     ]),
+                    if(_reserveinfo.shavingService)
                     Column(children: <Widget>[
                       Container(
                         child: Container(
@@ -239,7 +247,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
             width: 280,
             child: Text(
-              "Boat",
+              "${_reserveinfo.name}",
               textAlign: TextAlign.start,
               style: TextStyle(
                 fontSize: 35,
@@ -275,7 +283,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
             width: 280,
             child: Text(
-              "098-6706456",
+              "${_reserveinfo.phone}",
               textAlign: TextAlign.start,
               style: TextStyle(
                 fontSize: 35,
