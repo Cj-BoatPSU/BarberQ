@@ -1,7 +1,7 @@
 import 'package:barberq/presentation/history_page.dart';
 import 'package:flutter/material.dart';
 import 'package:barberq/reserveInfo.dart';
-import 'package:barberq/presentation/reservation2_page.dart';
+import 'package:barberq/presentation/reservation_page.dart';
 import 'package:barberq/presentation/anotherDay_page.dart';
 
 class HomePageScreen extends StatefulWidget {
@@ -15,7 +15,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
   DateTime _dateTime;
   bool todayClicked;
   bool tomorrowClicked;
-  List<ReserveInfo> listTimesToday = [
+  List<ReserveInfo> listtimes = [];
+  @override
+  void initState() {
+    listtimes = [
       ReserveInfo(TimeOfDay(hour: 9, minute: 0), "Boat", "0986706456", true, true, true, true),
       ReserveInfo(TimeOfDay(hour: 10, minute: 0), "", "", false, false, false, false),
       ReserveInfo(TimeOfDay(hour: 11, minute: 0), "Roon", "0864244489", true, true, false, false),
@@ -26,24 +29,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
       ReserveInfo(TimeOfDay(hour: 16, minute: 0), "", "", false, false, false, false),
       ReserveInfo(TimeOfDay(hour: 17, minute: 0), "", "", false, false, false, false),
       ReserveInfo(TimeOfDay(hour: 18, minute: 0), "", "", false, false, false, false),
-      ReserveInfo(TimeOfDay(hour: 19, minute: 0), "", "", false, false, false, false),];
-  List<ReserveInfo> listTimesTomorrow = [ 
-      ReserveInfo(TimeOfDay(hour: 9, minute: 0), "", "", false, false, false, false),
-      ReserveInfo(TimeOfDay(hour: 10, minute: 0), "", "", false, false, false, false),
-      ReserveInfo(TimeOfDay(hour: 11, minute: 0), "", "", false, false, false, false),
-      ReserveInfo(TimeOfDay(hour: 12, minute: 0), "", "", true, false, false, false),
-      ReserveInfo(TimeOfDay(hour: 13, minute: 0), "Em", "0975354352", true, true, true, false ),
-      ReserveInfo(TimeOfDay(hour: 14, minute: 0), "", "", false, false, false, false),
-      ReserveInfo(TimeOfDay(hour: 15, minute: 0), "", "", false, false, false, false),
-      ReserveInfo(TimeOfDay(hour: 16, minute: 0), "", "", false, false, false, false),
-      ReserveInfo(TimeOfDay(hour: 17, minute: 0), "", "", false, false, false, false),
-      ReserveInfo(TimeOfDay(hour: 18, minute: 0), "", "", false, false, false, false),
-      ReserveInfo(TimeOfDay(hour: 19, minute: 0), "", "", false, false, false, false),];
-  List<ReserveInfo> thisListTimes = [];
-   
-  @override
-  void initState() {
-    //+thisListTimes= listTimesTomorrow;
+      ReserveInfo(TimeOfDay(hour: 19, minute: 0), "", "", false, false, false, false),
+    ];
     todayClicked = false;
     tomorrowClicked = true;
     super.initState();
@@ -79,7 +66,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
               Container(
                 margin: EdgeInsets.only(top: 20),
                 child: Text(
-                  "Choose a day for reservations",
+                  "Choose a day for reservation  ",
                   style: TextStyle(
                       fontSize: 20,
                       color: Color(0xffdcd4c0),
@@ -136,7 +123,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           setState(() {
                             todayClicked = true;
                             tomorrowClicked = false;
-                            thisListTimes = listTimesToday;
                           });
                         },
                         elevation: 2.0,
@@ -171,7 +157,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           setState(() {
                             todayClicked = false;
                             tomorrowClicked = true;
-                            thisListTimes = listTimesTomorrow;
                           });
                         },
                         elevation: 15.0,
@@ -189,7 +174,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
               Expanded(
                 child: ListView.builder(
                     scrollDirection: Axis.vertical,
-                    itemCount:thisListTimes.length,
+                    itemCount: listtimes.length,
                     //padding: EdgeInsets.symmetric( horizontal: 10 , vertical: 10 ),
                     itemBuilder: (BuildContext context, int index) {
                       return buildlisttime(context, index);
@@ -226,10 +211,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
   void navigatorToReservation(BuildContext context, ReserveInfo _thisReserveInfo, int index) async {
     final ReserveInfo newreservation = await Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Reservation2Screen(_thisReserveInfo)));
+        context, MaterialPageRoute(builder: (context) => ReservationScreen(_thisReserveInfo)));
     if (newreservation != null) {
       setState(() {
-      thisListTimes[index] = newreservation;
+        listtimes[index] = newreservation;
       });
       print("Success navigator to reservation page");
     }
@@ -259,7 +244,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
               builder: (BuildContext context) {
                 return AlertDialog(
                   content: Text(
-                      "Are you sure you want to delete queue ${thisListTimes[index].name}?"),
+                      "Are you sure you want to delete queue ${listtimes[index].name}?"),
                   actions: <Widget>[
                     FlatButton(
                       child: Text(
@@ -277,10 +262,10 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       ),
                       onPressed: () {
                         setState(() { 
-                         thisListTimes[index].reserved = false;
-                         thisListTimes[index].cutService = false;
-                         thisListTimes[index].washService = false;
-                         thisListTimes[index].shavingService = false;
+                          listtimes[index].reserved = false;
+                          listtimes[index].cutService = false;
+                          listtimes[index].washService = false;
+                          listtimes[index].shavingService = false;
                           });
                         Navigator.of(context).pop();
                       },
@@ -296,8 +281,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
         children: <Widget>[
           RawMaterialButton(
             onPressed: () {
-              if (thisListTimes[index].time.hour != 12 && thisListTimes[index].reserved == true) {
-                navigatorToHistory(context, DateTime.now(), thisListTimes[index]);
+              if (listtimes[index].time.hour != 12 && listtimes[index].reserved == true) {
+                navigatorToHistory(context, DateTime.now(), listtimes[index]);
               }
             },
             elevation: 15.0,
@@ -307,7 +292,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                 width: 400,
                 margin: EdgeInsets.only(bottom: 10, left: 5),
                 decoration: BoxDecoration(
-                  color:thisListTimes[index].reserved
+                  color: listtimes[index].reserved
                       ? Colors.red[300]
                       : Color(0xffdcd4c0),
                   shape: BoxShape.rectangle,
@@ -324,30 +309,30 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          if (thisListTimes[index].reserved)
+                          if (listtimes[index].reserved)
                             Image.asset(
                               "images/bookmark.png",
                               width: 40,
                               height: 40,
                             ),
                         ]),
-                    if (thisListTimes[index].time.hour == 9)
+                    if (listtimes[index].time.hour == 9)
                       Padding(
                         padding: const EdgeInsets.only(right: 5.0, left: 10.0),
                         child: Text(
-                          "0${thisListTimes[index].time.hour}:00",
+                          "0${listtimes[index].time.hour}:00",
                           style: TextStyle(fontSize: 40),
                         ),
                       ),
-                    if (thisListTimes[index].time.hour != 9)
+                    if (listtimes[index].time.hour != 9)
                       Padding(
                         padding: const EdgeInsets.only(right: 10.0, left: 10),
                         child: Text(
-                          "${thisListTimes[index].time.hour}:00",
+                          "${listtimes[index].time.hour}:00",
                           style: TextStyle(fontSize: 40),
                         ),
                       ),
-                    if (thisListTimes[index].time.hour != 12)
+                    if (listtimes[index].time.hour != 12)
                       Padding(
                         padding: const EdgeInsets.only(right: 10),
                         child: Container(
@@ -356,7 +341,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  if(thisListTimes[index].reserved == false)
+                                  if(listtimes[index].reserved == false)
                                   Text(
                                     "<<---Empty--->>",
                                     style: TextStyle(
@@ -364,17 +349,17 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                       fontFamily: 'Chewy',
                                     ),
                                   ),
-                                  if(thisListTimes[index].reserved == true)
+                                  if(listtimes[index].reserved == true)
                                   Text(
-                                    "Name : ${thisListTimes[index].name}",
+                                    "Name : ${listtimes[index].name}",
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: 'Chewy',
                                     ),
                                   ),
-                                   if(thisListTimes[index].reserved == true)
+                                   if(listtimes[index].reserved == true)
                                   Text(
-                                    "Phone : ${thisListTimes[index].phone} ",
+                                    "Phone : ${listtimes[index].phone} ",
                                     style: TextStyle(
                                       fontSize: 18,
                                       fontFamily: 'Chewy',
@@ -382,7 +367,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                   ),
                                 ])),
                       ),
-                    if (thisListTimes[index].time.hour == 12)
+                    if (listtimes[index].time.hour == 12)
                       Container(
                           alignment: Alignment.centerLeft,
                           child: Column(
@@ -397,15 +382,15 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                   ),
                                 ),
                               ])),
-                    if (thisListTimes[index].time.hour != 12 &&
-                       thisListTimes[index].reserved == false)
+                    if (listtimes[index].time.hour != 12 &&
+                        listtimes[index].reserved == false)
                       Expanded(
                         child: Container(
                           width: 50,
                           height: 50,
                           child: RawMaterialButton(
                             onPressed: () {
-                              navigatorToReservation(context, thisListTimes[index], index);
+                              navigatorToReservation(context, listtimes[index], index);
                             },
                             elevation: 2.0,
                             fillColor: Color(0xffdcd4c0),
@@ -418,8 +403,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           ),
                         ),
                       ),
-                    if (thisListTimes[index].time.hour != 12 &&
-                        thisListTimes[index].reserved == true)
+                    if (listtimes[index].time.hour != 12 &&
+                        listtimes[index].reserved == true)
                       Expanded(
                         child: Container(
                           alignment: Alignment.center,
@@ -440,7 +425,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                           ),
                         ),
                       ),
-                    if (thisListTimes[index].time.hour == 12)
+                    if (listtimes[index].time.hour == 12)
                       Expanded(
                         child: Container(
                           width: 50,
