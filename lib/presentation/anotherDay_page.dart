@@ -18,9 +18,9 @@ class _AnotherDayScreenState extends State<AnotherDayScreen> {
   void initState() {
    _dateTime = widget._dateTime;
     listtimes = [
-      ReserveInfo(TimeOfDay(hour: 9, minute: 0), "Boat", "0986706456", true, true, true, true),
+      ReserveInfo(TimeOfDay(hour: 9, minute: 0), "", "", false, false, false, false),
       ReserveInfo(TimeOfDay(hour: 10, minute: 0), "", "", false, false, false, false),
-      ReserveInfo(TimeOfDay(hour: 11, minute: 0), "Roon", "0864244489", true, true, false, false),
+      ReserveInfo(TimeOfDay(hour: 11, minute: 0), "Mac", "0817586468", true, true, false, false),
       ReserveInfo(TimeOfDay(hour: 12, minute: 0), "", "", true, false, false, false),
       ReserveInfo(TimeOfDay(hour: 13, minute: 0), "", "", false, false, false, false ),
       ReserveInfo(TimeOfDay(hour: 14, minute: 0), "", "", false, false, false, false),
