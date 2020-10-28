@@ -1,174 +1,113 @@
-import 'dart:async';
-
-
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  // final FirebaseApp app = await Firebase.initializeApp(
-  //   // name: 'db2',
-  //   // options: FirebaseOptions(
-  //   //         appId: '1:411996370978:android:512a1b2ab563064eb3f27b',
-  //   //         apiKey: 'AIzaSyB5ax9sj1YnSqfof5z08hQ4iyxqnVvqXfk' ,
-  //   //         messagingSenderId: '411996370978',
-  //   //         projectId: '411996370978',
-  //   //         databaseURL: 'https://barberq-e783d.appspot.com/',
-  //   //       ),
-  // );
-  runApp(MaterialApp(
-    title: 'Flutter Database Example',
-    home: MyHomePage(),
-  ));
-}
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({this.app});
-  final FirebaseApp app;
+void main() => runApp(new MediaQuery(
+    data: new MediaQueryData(), child: new MaterialApp(home: new Testpage())));
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter;
-  DatabaseReference _counterRef;
-  DatabaseReference _messagesRef;
-  StreamSubscription<Event> _counterSubscription;
-  StreamSubscription<Event> _messagesSubscription;
-  bool _anchorToBottom = false;
-
-  String _kTestKey = 'Hello';
-  String _kTestValue = 'world!';
-  DatabaseError _error;
-
-  @override
-  void initState() {
-    super.initState();
-    // Demonstrates configuring to the database using a file
-    _counterRef = FirebaseDatabase.instance.reference().child('counter');
-    // Demonstrates configuring the database directly
-    final FirebaseDatabase database = FirebaseDatabase(app: widget.app);
-    _messagesRef = database.reference().child('messages');
-    database.reference().child('counter').once().then((DataSnapshot snapshot) {
-      print('Connected to second database and read ${snapshot.value}');
-    });
-    database.setPersistenceEnabled(true);
-    database.setPersistenceCacheSizeBytes(10000000);
-    _counterRef.keepSynced(true);
-    _counterSubscription = _counterRef.onValue.listen((Event event) {
-      setState(() {
-        _error = null;
-        _counter = event.snapshot.value ?? 0;
-      });
-    }, onError: (Object o) {
-      final DatabaseError error = o;
-      setState(() {
-        _error = error;
-      });
-    });
-    _messagesSubscription =
-        _messagesRef.limitToLast(10).onChildAdded.listen((Event event) {
-      print('Child added: ${event.snapshot.value}');
-    }, onError: (Object o) {
-      final DatabaseError error = o;
-      print('Error: ${error.code} ${error.message}');
-    });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _messagesSubscription.cancel();
-    _counterSubscription.cancel();
-  }
-
-  Future<void> _increment() async {
-    // Increment counter in transaction.
-    final TransactionResult transactionResult =
-        await _counterRef.runTransaction((MutableData mutableData) async {
-      mutableData.value = (mutableData.value ?? 0) + 1;
-      return mutableData;
-    });
-
-    if (transactionResult.committed) {
-      _messagesRef.push().set(<String, String>{
-        _kTestKey: '$_kTestValue ${transactionResult.dataSnapshot.value}'
-      });
-    } else {
-      print('Transaction not committed.');
-      if (transactionResult.error != null) {
-        print(transactionResult.error.message);
-      }
-    }
-  }
+class Testpage extends StatelessWidget {
+  final databaseReference = Firestore.instance;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter Database Example'),
+        title: Text('FireStore Demo'),
       ),
-      body: Column(
+      body: Center(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Flexible(
-            child: Center(
-              child: _error == null
-                  ? Text(
-                      'Button tapped $_counter time${_counter == 1 ? '' : 's'}.\n\n'
-                      'This includes all devices, ever.',
-                    )
-                  : Text(
-                      'Error retrieving button tap count:\n${_error.message}',
-                    ),
-            ),
+          RaisedButton(
+            child: Text('Create Record'),
+            onPressed: () {
+              createRecord1();
+            },
           ),
-          ListTile(
-            leading: Checkbox(
-              onChanged: (bool value) {
-                setState(() {
-                  _anchorToBottom = value;
-                });
-              },
-              value: _anchorToBottom,
-            ),
-            title: const Text('Anchor to bottom'),
+          RaisedButton(
+            child: Text('View Record'),
+            onPressed: () {
+              getData();
+            },
           ),
-          Flexible(
-            child: FirebaseAnimatedList(
-              key: ValueKey<bool>(_anchorToBottom),
-              query: _messagesRef,
-              reverse: _anchorToBottom,
-              sort: _anchorToBottom
-                  ? (DataSnapshot a, DataSnapshot b) => b.key.compareTo(a.key)
-                  : null,
-              itemBuilder: (BuildContext context, DataSnapshot snapshot,
-                  Animation<double> animation, int index) {
-                return SizeTransition(
-                  sizeFactor: animation,
-                  child: ListTile(
-                    trailing: IconButton(
-                      onPressed: () =>
-                          _messagesRef.child(snapshot.key).remove(),
-                      icon: Icon(Icons.delete),
-                    ),
-                    title: Text(
-                      "$index: ${snapshot.value.toString()}",
-                    ),
-                  ),
-                );
-              },
-            ),
+          RaisedButton(
+            child: Text('Update Record'),
+            onPressed: () {
+              updateData();
+            },
+          ),
+          RaisedButton(
+            child: Text('Delete Record'),
+            onPressed: () {
+              deleteData();
+            },
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _increment,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      )), //center
     );
+  }
+
+  void createRecord() async {
+    await databaseReference.collection("books")
+        .document("1")
+        .setData({
+          'title': 'Mastering Flutter',
+          'description': 'Programming Guide for Dart'
+        });
+
+    DocumentReference ref = await databaseReference.collection("books")
+        .add({
+          'title': 'Flutter in Action',
+          'description': 'Complete Programming Guide to learn Flutter'
+        });
+    print(ref.documentID);
+  }
+
+  void createRecord1()  {
+    databaseReference.collection("books")
+        .document("1")
+        .setData({
+          'title': 'Flutter',
+          'description': 'Guide for Dart'
+        });
+
+    // DocumentReference ref = await databaseReference.collection("books")
+    //     .add({
+    //       'title': 'Flutter in Action',
+    //       'description': 'Complete Programming Guide to learn Flutter'
+    //     });
+    // print(ref.documentID);
+    print("createRecord success!!");
+  }
+
+  void getData() {
+    databaseReference
+        .collection("books")
+        .getDocuments()
+        .then((QuerySnapshot snapshot) {
+      snapshot.documents.forEach((f) => print('${f.data}}'));
+    });
+  }
+
+  void updateData() {
+    try {
+      databaseReference
+          .collection('books')
+          .document('1')
+          .updateData({'description': 'Head First Flutter'});
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void deleteData() {
+    try {
+      databaseReference
+          .collection('books')
+          .document('1')
+          .delete();
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }

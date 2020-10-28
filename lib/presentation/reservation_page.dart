@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:barberq/reserveInfo.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:barberq/Bloc/CounterCubit.dart';
 
 class ReservationScreen extends StatefulWidget {
   final ReserveInfo _reserveInfo;
@@ -13,6 +16,7 @@ class _ReservationScreenState extends State<ReservationScreen> {
   TextEditingController _textNameController;
   TextEditingController _textPhoneController;
   ReserveInfo _thisreserveInfo;
+   final databaseReference = Firestore.instance;
   @override
   void initState() {
     _thisreserveInfo = widget._reserveInfo;
@@ -277,6 +281,18 @@ class _ReservationScreenState extends State<ReservationScreen> {
     );
   }
 
+   void recordData()  {
+    databaseReference.collection("customer")
+        .document("3")
+        .setData({
+          'Time': _thisreserveInfo.time.hour,
+          'Name': _textNameController.text,
+          'Phone': _textPhoneController.text,
+        });
+
+    print("Stored Record success!!");
+  }
+
   void addReserved() {
     ReserveInfo _newreserved = _thisreserveInfo;
     if(_textNameController.text != "" && _textPhoneController.text != "")
@@ -293,11 +309,15 @@ class _ReservationScreenState extends State<ReservationScreen> {
                   style: TextStyle(color: Colors.green, fontSize: 16),
                 ),
                 onPressed: () {
+                  recordData();
                    setState(() {
+                     context.bloc<StoredCubit>().addlist(_textNameController.text);
                     _newreserved.name = _textNameController.text;
                     _newreserved.phone = _textPhoneController.text;
                     _newreserved.reserved = true;
+
                   });
+                  context.bloc<StoredCubit>().printlist();
                   Navigator.of(context).pop();
                   Navigator.pop(context, _newreserved);
                 },

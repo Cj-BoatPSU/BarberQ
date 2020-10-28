@@ -1,34 +1,34 @@
 {
   "project_info": {
-    "project_number": "411996370978",
-    "firebase_url": "https://barberq-e783d.firebaseio.com",
-    "project_id": "barberq-e783d",
-    "storage_bucket": "barberq-e783d.appspot.com"
+    "project_number": "917595960730",
+    "firebase_url": "https://barberq-610a7.firebaseio.com",
+    "project_id": "barberq-610a7",
+    "storage_bucket": "barberq-610a7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:411996370978:android:512a1b2ab563064eb3f27b",
+        "mobilesdk_app_id": "1:917595960730:android:200257b7970ad58ff17623",
         "android_client_info": {
           "package_name": "com.example.barberq"
         }
       },
       "oauth_client": [
         {
-          "client_id": "411996370978-31llp29u8972ooerkqukmll7eucn71pd.apps.googleusercontent.com",
+          "client_id": "917595960730-2g4endsm027qiuc4qiuhfg5t53c9m2ss.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB5ax9sj1YnSqfof5z08hQ4iyxqnVvqXfk"
+          "current_key": "AIzaSyBBRWVhAGYSMCX8BpG1U1d83LYvg6lm3lc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "411996370978-31llp29u8972ooerkqukmll7eucn71pd.apps.googleusercontent.com",
+              "client_id": "917595960730-2g4endsm027qiuc4qiuhfg5t53c9m2ss.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
