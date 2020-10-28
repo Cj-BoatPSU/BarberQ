@@ -3,6 +3,7 @@ import 'package:barberq/reserveInfo.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:barberq/Bloc/CounterCubit.dart';
+import 'CustomerList.dart';
 
 class ReservationScreen extends StatefulWidget {
   final ReserveInfo _reserveInfo;
@@ -16,7 +17,8 @@ class _ReservationScreenState extends State<ReservationScreen> {
   TextEditingController _textNameController;
   TextEditingController _textPhoneController;
   ReserveInfo _thisreserveInfo;
-   final databaseReference = Firestore.instance;
+
+  final databaseReference = Firestore.instance;
   @override
   void initState() {
     _thisreserveInfo = widget._reserveInfo;
@@ -281,81 +283,93 @@ class _ReservationScreenState extends State<ReservationScreen> {
     );
   }
 
-   void recordData()  {
-    databaseReference.collection("customer")
-        .document("3")
+  void recordData() {
+    databaseReference
+        .collection("customer")
+        .document(_textNameController.text)
         .setData({
-          'Time': _thisreserveInfo.time.hour,
-          'Name': _textNameController.text,
-          'Phone': _textPhoneController.text,
-        });
-
+      'Name': _textNameController.text,
+      'Phone': _textPhoneController.text,
+    });
     print("Stored Record success!!");
   }
 
   void addReserved() {
     ReserveInfo _newreserved = _thisreserveInfo;
-    if(_textNameController.text != "" && _textPhoneController.text != "")
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: Text("Confirm Reservation",
-            style: TextStyle( fontSize: 20,fontWeight: FontWeight.bold,),),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(
-                  "Confirm",
-                  style: TextStyle(color: Colors.green, fontSize: 16),
+    CustomerList ctm;
+    if (_textNameController.text != "" && _textPhoneController.text != "")
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text(
+                "Confirm Reservation",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-                onPressed: () {
-                  recordData();
-                   setState(() {
-                     context.bloc<StoredCubit>().addlist(_textNameController.text);
-                    _newreserved.name = _textNameController.text;
-                    _newreserved.phone = _textPhoneController.text;
-                    _newreserved.reserved = true;
-
-                  });
-                  context.bloc<StoredCubit>().printlist();
-                  Navigator.of(context).pop();
-                  Navigator.pop(context, _newreserved);
-                },
               ),
-              FlatButton(
-                child: Text(
-                  "Cancel",
-                  style: TextStyle(color: Colors.red, fontSize: 16),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text(
+                    "Confirm",
+                    style: TextStyle(color: Colors.green, fontSize: 16),
+                  ),
+                  onPressed: () {
+                    recordData();
+                    setState(() {
+                      ctm = CustomerList(
+                        _textNameController.text,
+                        _textPhoneController.text,
+                      );
+                      context.bloc<StoredCubit>().addlist(ctm);
+                      _newreserved.name = _textNameController.text;
+                      _newreserved.phone = _textPhoneController.text;
+                      _newreserved.reserved = true;
+                    });
+                    context.bloc<StoredCubit>().printlist();
+                    Navigator.of(context).pop();
+                    Navigator.pop(context, _newreserved);
+                  },
                 ),
-                onPressed: () {
-                   Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        });
-        if(_textNameController.text == "" || _textPhoneController.text == "")
-        showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: Text("Please fill in all required information.", 
-            style: TextStyle( fontSize: 20,fontWeight: FontWeight.bold,),),
-            actions: <Widget>[
-              FlatButton(
-                child: Text(
-                  "OK",
-                  style: TextStyle(color: Colors.green, fontSize: 16),
+                FlatButton(
+                  child: Text(
+                    "Cancel",
+                    style: TextStyle(color: Colors.red, fontSize: 16),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
-                onPressed: () {
-                   setState(() {
-                  });
-                  Navigator.of(context).pop();
-                },
+              ],
+            );
+          });
+    if (_textNameController.text == "" || _textPhoneController.text == "")
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text(
+                "Please fill in all required information.",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ],
-          );
-        });
+              actions: <Widget>[
+                FlatButton(
+                  child: Text(
+                    "OK",
+                    style: TextStyle(color: Colors.green, fontSize: 16),
+                  ),
+                  onPressed: () {
+                    setState(() {});
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          });
   }
 
   Widget buildTextFieldName() {
@@ -387,6 +401,43 @@ class _ReservationScreenState extends State<ReservationScreen> {
                 fontWeight: FontWeight.bold,
                 color: Color(0xffdcd4c0),
               ),
+              onTap: () {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
+              },
+              onSubmitted: (String value) async {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+                if (context.bloc<StoredCubit>().rememberCustomer(_textNameController.text) !=null) {
+                  await showDialog<void>(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Remember Customer'),
+                        content:
+                            Text('This customer "$value" is Regular Customer'),
+                        actions: <Widget>[
+                          FlatButton(
+                            onPressed: () {
+                              setState(() {
+                                _textPhoneController = TextEditingController(
+                                    text: context
+                                        .bloc<StoredCubit>()
+                                        .rememberCustomer(
+                                            _textNameController.text));
+                              });
+                              Navigator.pop(context);
+                              currentFocus.unfocus();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
               cursorColor: Color(0xffdcd4c0),
             ),
           )

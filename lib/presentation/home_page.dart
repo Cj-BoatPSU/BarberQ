@@ -1,10 +1,13 @@
+
 import 'package:barberq/presentation/history_page.dart';
 import 'package:flutter/material.dart';
 import 'package:barberq/reserveInfo.dart';
 import 'package:barberq/presentation/reservation_page.dart';
 import 'package:barberq/presentation/anotherDay_page.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:barberq/Bloc/CounterCubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:barberq/Bloc/CounterCubit.dart';
+
+
 
 class HomePageScreen extends StatefulWidget {
   HomePageScreen();
@@ -22,6 +25,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
   List<ReserveInfo> listtimeToday = [];
   @override
   void initState() {
+    context.bloc<StoredCubit>().getCustomer();
+    // getPockets();
     listtimeTomorrow = [
       ReserveInfo(TimeOfDay(hour: 9, minute: 0), "Boat", "0986706456", true,
           true, true, true),
@@ -159,7 +164,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                       ),
                       child: RawMaterialButton(
                         onPressed: () {
-                          print("${now.hour}:${now.minute}");
+                          context.bloc<StoredCubit>().printlist();
+                          print(context.bloc<StoredCubit>().rememberCustomer("Boat")+'(from rememberCustomer)');
                           setState(() {
                             todayClicked = true;
                             tomorrowClicked = false;
@@ -678,4 +684,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
           ),
         ]);
   }
+
+
 }
