@@ -10,11 +10,9 @@
 
 <img src="/images/6.png" width="35%" height="50%"> <img src="/images/7.png" width="35%" height="50%"> 
 <p>ในหน้านี้แท็ป Today สำหรับลูกค้าที่ต้องการจองวันนี้</p>
-![](/images/8.png)
 
-![](/images/9.png)
-
-![](/images/10.png)
+<img src="/images/8.png" width="35%" height="50%"> <img src="/images/9.png" width="35%" height="50%"> <img src="/images/10.png" width="35%" height="50%"> 
+<p>เป็นหน้าที่ใช้ในการจองคิวตัดผมโดยจะให้ใส่ข้อมูล ชื่อลูกค้า เบอร์โทรศัพท์ และเลือกบริการที่ลูกค้าต้องการ</p>
 
 ![](/images/11.png)
 
