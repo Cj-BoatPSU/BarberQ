@@ -5,13 +5,11 @@
 <img src="/images/1.png" width="30%" height="50%"> <img src="/images/2.png" width="30%" height="50%"> <img src="/images/3.png" width="30%" height="50%">      
 <p>เป็นหน้าแรกของแอพพลิเคชั่น โดยพอเปิดมาครั้งแรกจะเห็นได้ว่า แอพจะไปที่แท็ปของ Tomorrow เนื่องจาก จากการสอบถามร้านตัดผมโดยทั่วไปที่มีระบบการจองนั้นลูกจะโทรมาจองคิวตัดผมในวันพรุ้งนี้เป็นส่วนใหญ่</p>
 
-<img src="/images/4.png" width="40%" height="50%"> <img src="/images/5.png" width="40%" height="50%"> 
+<img src="/images/4.png" width="35%" height="50%"> <img src="/images/5.png" width="35%" height="50%"> 
 <p>ในหน้านี้จะเป็นการแสดงข้อมูลของลูกค้าที่ได้ทำการจองไว้แล้ว</p>
 
-![](/images/6.png)
-
-![](/images/7.png)
-
+<img src="/images/6.png" width="35%" height="50%"> <img src="/images/7.png" width="35%" height="50%"> 
+<p>ในหน้านี้แท็ป Today สำหรับลูกค้าที่ต้องการจองวันนี้</p>
 ![](/images/8.png)
 
 ![](/images/9.png)
