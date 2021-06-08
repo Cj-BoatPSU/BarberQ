@@ -4,7 +4,7 @@
 
 ![]<img src="/images/1.png" width="400" height="790">
 
-![](/images/2.png)
+![]<img src="/images/2.png" width="400" height="790">
 
 ![](/images/3.png)
 
