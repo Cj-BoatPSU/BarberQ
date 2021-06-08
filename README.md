@@ -2,9 +2,9 @@
 ##### เป็นแอพพลิเคชั่นที่ใช้ในการจองคิวร้านตัดผมเหมาะสำหรับพนักงานในร้านตัดผม เพื่อสะดวกในการจองคิวมากยิ่งขึ้น
 ## UI design
 
-![]<img src="/images/1.png" width="400" height="790">
+<img src="/images/1.png" width="400" height="790">
 
-![]<img src="/images/2.png" width="400" height="790">
+<img src="/images/2.png" width="400" height="790">
 
 ![](/images/3.png)
 
