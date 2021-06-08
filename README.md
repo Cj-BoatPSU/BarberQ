@@ -11,27 +11,7 @@
 <img src="/images/6.png" width="35%" height="50%"> <img src="/images/7.png" width="35%" height="50%"> 
 <p>ในหน้านี้แท็ป Today สำหรับลูกค้าที่ต้องการจองวันนี้</p>
 
-<img src="/images/8.png" width="35%" height="50%"> <img src="/images/9.png" width="35%" height="50%"> <img src="/images/10.png" width="35%" height="50%"> 
+<img src="/images/8.png" width="30%" height="50%"> <img src="/images/10.png" width="30%" height="50%"> <img src="/images/11.png" width="30%" height="50%"> 
 <p>เป็นหน้าที่ใช้ในการจองคิวตัดผมโดยจะให้ใส่ข้อมูล ชื่อลูกค้า เบอร์โทรศัพท์ และเลือกบริการที่ลูกค้าต้องการ</p>
 
-![](/images/11.png)
 
-![](/images/12.png)
-
-![](/images/13.png)
-
-![](/images/14.png)
-
-![](/images/15.png)
-
-![](/images/16.png)
-
-![](/images/17.png)
-
-![](/images/18.png)
-
-![](/images/19.png)
-
-![](/images/20.png)
-
-![](/images/21.png)
