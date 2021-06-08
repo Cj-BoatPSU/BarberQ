@@ -14,4 +14,6 @@
 <img src="/images/8.png" width="30%" height="50%"> <img src="/images/10.png" width="30%" height="50%"> <img src="/images/11.png" width="30%" height="50%"> 
 <p>เป็นหน้าที่ใช้ในการจองคิวตัดผมโดยจะให้ใส่ข้อมูล ชื่อลูกค้า เบอร์โทรศัพท์ และเลือกบริการที่ลูกค้าต้องการ</p>
 
+<img src="/images/13.png" width="30%" height="50%"> <img src="/images/14.png" width="30%" height="50%"> <img src="/images/15.png" width="30%" height="50%"> 
+<p>ในกรณี</p>
 
