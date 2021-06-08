@@ -17,3 +17,8 @@
 <img src="/images/13.png" width="30%" height="50%"> <img src="/images/14.png" width="30%" height="50%"> <img src="/images/15.png" width="30%" height="50%"> 
 <p>ในกรณีลูกค้าประจำระบบจะการจดจำเบอร์โทรของลูกค้าประจำได้จากชื่อลูกค้าได้เลย โดยไม่ได้เสียเวลาในการจดเบอร์ใหม่อีกรอบหนึ่ง</p>
 
+<img src="/images/16.png" width="30%" height="50%"> <img src="/images/17.png" width="30%" height="50%"> <img src="/images/18.png" width="30%" height="50%"> 
+<p>ในกรณีลูกค้าต้องการจองล่วงหน้าหลายวัน สามารถกดไปที่รูปปฏิทินได้เลย</p>
+
+<img src="/images/19.png" width="30%" height="50%"> <img src="/images/20.png" width="30%" height="50%"> <img src="/images/21.png" width="30%" height="50%"> 
+<p>ในกรณีลูกค้าต้องยกเลิกคิวที่เคยจองไว้ สามารถลบคิวออกได้เลยโดยกดไปที่ไอคอนรูปถังขยะ</p>
